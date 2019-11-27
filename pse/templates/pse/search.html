@@ -1,0 +1,51 @@
+{% extends 'pse/base.html' %}
+
+{% block title %}Wyniki wyszukiwania pakietów{% endblock %}
+
+{% block content %}
+    <div class="col-md-12 col-sm-12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">Packages Search Explorer</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="form-inline my-2 my-lg-0" method="get">
+                    <input class="form-control mr-sm-2" type="search" name="q" placeholder="Wpisz szukany tekst" aria-label="Szukaj">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+
+    <div class="col-md-12 col-sm-12">
+        {% if request.GET.q %}
+            <div class="card">
+                <div class="card-header">
+                    <h1>Wyniki wyszukiwania: {{ request.GET.q }}</h1>
+                </div>
+            </div>
+        {% endif %}
+        <div class="card">
+            {% for item in object_list %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <div class="row justify-content-start">
+                        <div class="col-4 border">Wersja</div>
+                        <div class="col-4 border">{{ item.version }}</div>
+                    </div>
+                    <div class="row justify-content-start">
+                        <div class="col-4 border">Autor</div>
+                        <div class="col-4 border">{{ item.author }}</div>
+                    </div>
+                    <div class="row justify-content-start">
+                        <div class="col-4 border">Adres email autora</div>
+                        <div class="col-4 border">{{ item.author_email }}</div>
+                    </div>
+                    <div class="row justify-content-start">
+                        <div class="col">Opis</div>
+                    </div>
+                    <div class="card-text">{{ item.description|safe }}</div>
+                    <a href="{{ item.url }}" target="_blank" class="btn btn-primary">Szczegóły na pypi.org</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

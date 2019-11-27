@@ -4,6 +4,7 @@ from django.db import models
 class Package(models.Model):
     name = models.CharField(verbose_name='Tytuł pakietu', max_length=250)
     author = models.CharField(verbose_name='Autor', max_length=250)
+    author_email = models.EmailField(verbose_name='Email autora', max_length=70, null=True, blank=True)
     description = models.TextField(verbose_name='Opis pakietu')
     keywords = models.CharField(verbose_name='Słowa kluczowe', max_length=250, null=True, blank=True)
     version = models.CharField(verbose_name='Bieżąca wersja', max_length=50)
