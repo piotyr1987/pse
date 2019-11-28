@@ -1,4 +1,5 @@
 DEBUG=1
+PAGINATION_PAGE_SIZE=5
 SQL_ENGINE=django.db.backends.postgresql
 SQL_DATABASE=pse_db
 SQL_USER=pse_db_user

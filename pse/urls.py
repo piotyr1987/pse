@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib import admin
 from django.urls import path
-from pse.views import search
+from pse.views import ApiSearchView, SearchView
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', search, name='search')
+    path('', SearchView.as_view(), name='search'),
+    path('api/pypi/', ApiSearchView.as_view(), name='api_search'),
 ]
 
 if settings.DEBUG:

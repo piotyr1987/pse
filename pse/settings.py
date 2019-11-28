@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_elasticsearch_dsl',
-    'django_elasticsearch_dsl_drf',
     'celery',
     'pse',
 ]
@@ -146,3 +145,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
 }
+
+PAGINATION_PAGE_SIZE = int(os.environ.get('PAGINATION_PAGE_SIZE', 10))
