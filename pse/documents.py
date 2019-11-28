@@ -1,18 +1,18 @@
-from django_elasticsearch_dsl import DocType, Index
-
+from django_elasticsearch_dsl import Document
+from django_elasticsearch_dsl.registries import registry
 from pse.models import Package
 
-search_index = Index('package')
-search_index.settings(
-    number_of_shards=1,
-    number_of_replicas=0
-)
 
+@registry.register_document
+class PackageDocument(Document):
+    class Index:
+        name = 'package'
+        settings = {
+            'number_of_shards': 1,
+            'number_of_replicas': 0,
+        }
 
-@search_index.doc_type
-class PackageDocument(DocType):
-
-    class Meta:
+    class Django:
         model = Package
 
         fields = [

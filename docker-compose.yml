@@ -14,7 +14,7 @@ services:
       - ./definitions.json:/opt/definitions.json:ro
       - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
   elasticsearch:
-    image: elasticsearch:6.6.1
+    image: elasticsearch:7.4.2
     volumes:
       - esdata:/usr/share/elasticsearch/data
     environment:

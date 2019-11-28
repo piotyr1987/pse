@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
     'celery',
     'pse',
 ]

@@ -1,5 +1,3 @@
-create:
-	@virtualenv -p python3 venv
 build:
 	@docker-compose build
 
