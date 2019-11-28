@@ -11,6 +11,7 @@ def search(request):
         'version',
         'author_email',
         'description',
+        'keywords',
     ])
 
     return render(request, 'pse/search.html', {'object_list': result.execute()})

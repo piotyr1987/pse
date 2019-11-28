@@ -1,5 +1,27 @@
 version: '3.7'
 services:
+  rabbitmq:
+    image: rabbitmq:3.7-alpine
+    command: rabbitmq-server
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    volumes:
+      - ./data:/var/lib/rabbitmq:rw
+      - ./definitions.json:/opt/definitions.json:ro
+      - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+  elasticsearch:
+    image: elasticsearch:6.6.1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
   web:
     build: .
     command: gunicorn pse.wsgi:application --bind 0.0.0.0:8000
@@ -12,6 +34,8 @@ services:
       - ./env
     depends_on:
       - db
+      - rabbitmq
+      - worker
     links:
       - elasticsearch:elasticsearch
       - rabbitmq:rabbitmq
@@ -23,34 +47,21 @@ services:
       - POSTGRES_USER=pse_db_user
       - POSTGRES_PASSWORD=pse_db_password
       - POSTGRES_DB=pse_db
-  elasticsearch:
-    image: elasticsearch:6.6.1
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
-    environment:
-      - discovery.type=single-node
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-  rabbitmq:
-    image: rabbitmq
-    command: rabbitmq-server
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=mypass
   worker:
     build:
       context: .
       dockerfile: Dockerfile
-    command: celery worker -A pse.celery.app -Q default -n default@%h
+    command: celery -A pse worker --loglevel=info
     volumes:
       - .:/code/
+    env_file:
+      - ./env
     depends_on:
-      - web
       - rabbitmq
+      - db
+    links:
+      - rabbitmq
+      - db
 volumes:
   postgres_data:
   static_volume:

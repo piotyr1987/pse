@@ -23,4 +23,5 @@ class PackageDocument(DocType):
             'description',
             'version',
             'url',
+            'keywords',
         ]

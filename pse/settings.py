@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_elasticsearch_dsl',
+    'celery',
     'pse',
 ]
 
@@ -136,7 +137,7 @@ ELASTICSEARCH_DSL = {
         'hosts': 'elasticsearch:9200'
     },
 }
-CELERY_BROKER_URL = 'amqp://admin:mypass@rabbitmq'
+CELERY_BROKER_URL = 'pyamqp://admin:mypass@rabbitmq'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
