@@ -1,0 +1,2 @@
+58 23 * * * /usr/local/bin/python /code/manage.py import_packages_list
+# cron
