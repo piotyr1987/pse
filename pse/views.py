@@ -1,3 +1,9 @@
+from django.core.paginator import (
+    EmptyPage,
+    PageNotAnInteger,
+    Paginator,
+)
+from django.http import Http404
 from django.shortcuts import render
 from pse.documents import PackageDocument
 
@@ -13,5 +19,11 @@ def search(request):
         'description',
         'keywords',
     ])
+    p = Paginator(result.execute(), 2)
 
-    return render(request, 'pse/search.html', {'object_list': result.execute()})
+    page = request.GET.get('page', 1)
+    try:
+        object_list = p.page(page)
+    except (EmptyPage, PageNotAnInteger):
+        raise Http404
+    return render(request, 'pse/search.html', {'object_list': object_list})

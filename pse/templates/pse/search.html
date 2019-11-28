@@ -51,5 +51,20 @@
                 </div>
             {% endfor %}
         </div>
+        <nav aria-label="navigation">
+            <ul class="pagination justify-content-end">
+                {% if object_list.has_previous %}
+                    <li class="page-item">
+                        <a class="btn btn-primary" href="?q={{ request.GET.q }}&page={{ object_list.previous_page_number }}">Poprzednia</a>
+                    </li>
+                {% endif %}
+                {% if object_list.has_next %}
+                    <li class="page-item">
+                        <a class="btn btn-primary" href="?q={{ request.GET.q }}&page={{ object_list.next_page_number }}">Następna</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        </div>
     </div>
 {% endblock %}
