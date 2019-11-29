@@ -12,3 +12,9 @@ test:
 
 report:
 	@docker-compose run --rm web coverage report
+
+migrate:
+	@docker-compose run --rm web python manage.py migrate
+
+import:
+	@docker-compose run --rm web python manage.py import_packages_list
