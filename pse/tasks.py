@@ -1,4 +1,3 @@
-import json
 import requests
 
 from pse.celery import app
@@ -8,7 +7,9 @@ from pse.models import Package
 @app.task
 def import_package(url):
     res = requests.get(url)
-    result = json.loads(res.text)
+    if res.status_code != 200:
+        return
+    result = res.json()
     try:
         obj = Package.objects.get(url=result['info']['project_url'])
     except Package.DoesNotExist:

@@ -13,7 +13,8 @@ class Command(BaseCommand):
 
     def get_url_list(self):
         url_list = []
-        for item in feedparser.parse(PYPI_URL).entries:
+        feed = feedparser.parse(PYPI_URL)
+        for item in feed['entries']:
             link = list(filter(None, urlparse(item['link']).path.split(os.sep)))[-1]
             url_list.append('https://pypi.org/pypi/{}/json'.format(link))
         return url_list
