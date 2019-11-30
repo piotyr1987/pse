@@ -1,7 +1,7 @@
 
 # PSE
 
-It downloads a list of new packages from https://pypi.org/rss/packages.xml once a day.
+Application downloads a list of new packages from https://pypi.org/rss/packages.xml once a day.
 
 ## Getting Started
 
